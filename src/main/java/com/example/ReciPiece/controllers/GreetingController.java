@@ -1,6 +1,7 @@
 package com.example.ReciPiece.controllers;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import java.util.List;
 // Controller which contains routes for our application and the behaviour that occurs when a user vists the route
 // Combines @Controller and @ResponseBody annotations, allowing return of string data as apposed to an entire view
 @RestController
+@CrossOrigin(origins = "localhost")  // CrossOrigin is the security protocol that prevents an address from calling itself so we must allow an exception
 public class GreetingController {
 
     // Api key is held within application.properties and called using @Value to obscure it from public view
