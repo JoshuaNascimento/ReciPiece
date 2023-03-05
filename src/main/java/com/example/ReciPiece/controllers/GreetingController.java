@@ -1,15 +1,21 @@
 package com.example.ReciPiece.controllers;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
+
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 // Controller which contains routes for our application and the behaviour that occurs when a user vists the route
 // Combines @Controller and @ResponseBody annotations, allowing return of string data as apposed to an entire view
@@ -49,12 +55,37 @@ public class GreetingController {
         return result;
     }
 
-    // Call spoonacular passing in api key to get recipe result
+    // Call Spoonacular Api to generate recipes based on ingredients provided
     @GetMapping(value = "/recipe")
-    public String getRecipe() {
-        String url = String.format("https://api.spoonacular.com/recipes/complexSearch?apiKey=%s", apiKey);
+    // RequestParam requires the parameter of "ingredients" to be passed when this route is called
+    public String getRecipe(@RequestParam String ingredients) {
+
+        // TODO: In future either find a better way to build url to allow for passing of other parameters like recipe limit
+        String url = "https://api.spoonacular.com/recipes/findByIngredients?ingredients=";
+
+        // RestTemplate will be used to consume the RESTful api of Spoonacular
         RestTemplate restTemplate = new RestTemplate();
-        String result = restTemplate.getForObject(url, String.class);
+
+        // Create headers object which will be used to pass the apiKey instead of through the url, potentially keeps the key safer i'm unsure
+        HttpHeaders headers = new HttpHeaders();
+        // Set apiKey header using the key hidden in application.properties
+        headers.set("x-api-key", apiKey);
+
+        // Create Entity which consists of headers and a body
+        // Set the headers of the entity
+        HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+
+        // ResponseEntity extends HttpEntity and allows us to use exchange() instead of getForEntity()
+        // This is preferred as getForEntity() doesn't allow for the passing of headers
+        ResponseEntity<String> response = restTemplate.exchange(
+                url + ingredients, HttpMethod.GET, requestEntity, String.class
+        );
+
+        // TODO: Error handle a bad request, potentially providing the status of the request to the frontend
+
+        // Java uniquely uses strings as JSONs, so the return will potentially need to be modified to make it easier
+        // for the frontend to convert the result to a JSON
+        String result = response.getBody();
         return result;
     }
 }
