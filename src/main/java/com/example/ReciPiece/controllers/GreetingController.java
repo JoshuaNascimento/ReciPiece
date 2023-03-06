@@ -86,6 +86,7 @@ public class GreetingController {
         // Java uniquely uses strings as JSONs, so the return will potentially need to be modified to make it easier
         // for the frontend to convert the result to a JSON
         String result = response.getBody();
+        System.out.println(result);
         return result;
     }
 }
