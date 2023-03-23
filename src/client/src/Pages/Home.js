@@ -2,13 +2,15 @@ import "./Home.css"
 import React, {useState} from 'react'
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-
+import { useNavigate, Link } from "react-router-dom";
 
 export default function Home() {
 
   const [ingredientsList, setIngredientsList] = useState([]);
   const [ingredient, setIngredient] = useState('');
-  const [recipes, setRecipes] = useState([]);
+
+  // Used to change the websites page
+  const navigate = useNavigate();
 
   // Responsible for handling when the ingredient submit button is cliced
   const handleIngredient = event => {
@@ -34,7 +36,8 @@ export default function Home() {
      * @param {*} event - Trigger for when the Find Recipe button is clicked
      */
   const handleRecipeSearch = async (event) => {
-    event.preventDefault();
+    // TODO: Use prevent default to error check the response than only send to new page if response is 200
+    //event.preventDefault();
 
     // Create string of comma seperated elements from ingredientsList state array
     let ingredientsString = ingredientsList.join()
@@ -43,21 +46,26 @@ export default function Home() {
     const response = await fetch(`/recipe?ingredients=${ingredientsString}`)
     // Convert the response into json data
     const recipes = await response.json();
-    console.log(recipes);
-    // Set the recipes state to the response obtained
-    setRecipes(recipes);
+    console.log(recipes, "recipes");
+
+    // using the useNavigate hook we tell the browser to change page urls and pass to the component found at that route the recipes information
+    navigate('/recipes', {
+      state: {
+        data: recipes
+      },
+    });
+    
   }
 
   return (
-    // Add form to allow user's to enter ingredients
+    // TODO: implement a system allow users to view and edit their ingredients list
     <div className="home-container">
       <h1>ReciPieces</h1>
       <form noValidate autoComplete="off">
         <TextField onChange={(e) => setIngredient(e.target.value)} className="ingredients-field" label="ingredients" variant="standard" size="medium" value={ingredient}/>
         <Button onClick={handleIngredient} className ="ingredients-button" variant="contained">Submit</Button>
-        <Button onClick={handleRecipeSearch} className ="recipe-button" variant="contained">Find Recipe</Button>
+        <Button onClick={handleRecipeSearch} variant="contained">Find Recipes</Button>
       </form>
-
     </div>
   )
 }

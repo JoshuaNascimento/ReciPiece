@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import './App.css';
 import {Route, BrowserRouter as Router, Routes} from 'react-router-dom';
 import Home from "./Pages/Home";
+import Recipes from './Pages/RecipeInfo';
 
 import TextField from '@mui/material/Button';
 
@@ -24,6 +25,7 @@ class App extends Component {
             <Router>
                 <Routes>
                     <Route path="/" exact element={<Home/>}/>
+                    <Route path ="/recipes" exact element={<Recipes/>}/>
                 </Routes>
             </Router>
             

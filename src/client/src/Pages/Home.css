@@ -3,3 +3,7 @@
   height: 100vh;
   background-color: #FEDBD0;
 }
+
+.recipe-link {
+  text-decoration: none;
+}
