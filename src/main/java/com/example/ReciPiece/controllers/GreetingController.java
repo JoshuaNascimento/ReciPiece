@@ -11,6 +11,10 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -55,6 +59,7 @@ public class GreetingController {
         return result;
     }
 
+
     // Call Spoonacular Api to generate recipes based on ingredients provided
     @GetMapping(value = "/recipe")
     // RequestParam requires the parameter of "ingredients" to be passed when this route is called
@@ -89,4 +94,60 @@ public class GreetingController {
         System.out.println(result);
         return result;
     }
+
+
+    /*
+    // Call Spoonacular Api to generate recipes based on ingredients provided
+    @GetMapping(value = "/recipe")
+    // RequestParam requires the parameter of "ingredients" to be passed when this route is called
+    public String getRecipe(@RequestParam String ingredients) throws JSONException {
+
+        // TODO: In future either find a better way to build url to allow for passing of other parameters like recipe limit
+        String ingredientsURL = "https://api.spoonacular.com/recipes/findByIngredients?ingredients=";
+
+        // RestTemplate will be used to consume the RESTful api of Spoonacular
+        RestTemplate restTemplate = new RestTemplate();
+
+        // Create headers object which will be used to pass the apiKey instead of through the url, potentially keeps the key safer i'm unsure
+        HttpHeaders headers = new HttpHeaders();
+        // Set apiKey header using the key hidden in application.properties
+        headers.set("x-api-key", apiKey);
+
+        // Create Entity which consists of headers and a body
+        // Set the headers of the entity
+        HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+
+        // ResponseEntity extends HttpEntity and allows us to use exchange() instead of getForEntity()
+        // This is preferred as getForEntity() doesn't allow for the passing of headers
+        ResponseEntity<String> recipeList = restTemplate.exchange(
+                ingredientsURL + ingredients, HttpMethod.GET, requestEntity, String.class
+        );
+
+        // TODO: Error handle a bad request, potentially providing the status of the request to the frontend
+
+        // Java uniquely uses strings as JSONs, so by using getBody result is already in JSON format
+        String result = recipeList.getBody();
+        System.out.println(result);
+
+        // We convert the JSON into a JSONArray using the org.json library to parse individual recipe IDs
+        final JSONArray obj = new JSONArray(result);
+        // Iterate over the first 3 recipes gotten from the ingredients api call
+        for (int i = 0; i < 3; i++) {
+            // Parse out the recipe's ID from the result JSON
+            String recipeID = obj.getJSONObject(i).getString("id");
+            // Use the recipe ID to call another endpoint to get the full recipe information
+            String url = String.format("https://api.spoonacular.com/recipes/%s/information", recipeID);
+
+            ResponseEntity<String> recipeInfo = restTemplate.exchange(
+                    url, HttpMethod.GET, requestEntity, String.class
+            );
+            System.out.println(recipeInfo);
+        }
+
+        return result;
+
+
+    }
+
+     */
 }

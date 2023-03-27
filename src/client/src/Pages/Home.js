@@ -46,12 +46,11 @@ export default function Home() {
     const response = await fetch(`/recipe?ingredients=${ingredientsString}`)
     // Convert the response into json data
     const recipes = await response.json();
-    console.log(recipes, "recipes");
 
     // using the useNavigate hook we tell the browser to change page urls and pass to the component found at that route the recipes information
     navigate('/recipes', {
       state: {
-        data: recipes
+        recipes: recipes
       },
     });
     
