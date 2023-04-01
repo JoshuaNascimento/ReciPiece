@@ -1,8 +1,20 @@
-import "./Home.css"
+//import "./Home.css"
 import React, {useState} from 'react'
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
+import { ListItem, Typography} from "@mui/material";
+import DeleteIcon from '@mui/icons-material/Delete';
+import AddBoxRoundedIcon from '@mui/icons-material/AddBoxRounded';
+import { Box } from '@mui/system';
+
+const sxStyle = {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  height: '100vh',
+  background: '#FEDBD0',
+}
 
 export default function Home() {
 
@@ -56,15 +68,48 @@ export default function Home() {
     
   }
 
+  /**
+   * Upon clicking the icon beside an ingredient in the rendered list we take the index of the ingredient to be removed.
+   * Then we create a new array for ingredientsList state which splices out the ingredient and sets this array as our new state.
+   * @param {*} ingredient - The ingredient within the UI ingredient list which is to be removed
+   */
+  const deleteIngredient = (ingredient) => {
+    
+    const removalIndex = ingredientsList.indexOf(ingredient); // Obtain index of ingredient we wish to remove
+    // Create new array using spread operator to create a new array which does not reference previous one
+    // This allows React to properly interpret state change and render upon change correctly
+    const data = [...ingredientsList];                        
+    data.splice(removalIndex, 1);                             // Now find the index of the ingredient and remove 1 element
+    setIngredientsList(data);                                 // Set the new ingredient list to the new array
+  }
+
   return (
-    // TODO: implement a system allow users to view and edit their ingredients list
-    <div className="home-container">
-      <h1>ReciPieces</h1>
-      <form noValidate autoComplete="off">
-        <TextField onChange={(e) => setIngredient(e.target.value)} className="ingredients-field" label="ingredients" variant="standard" size="medium" value={ingredient}/>
-        <Button onClick={handleIngredient} className ="ingredients-button" variant="contained">Submit</Button>
-        <Button onClick={handleRecipeSearch} variant="contained">Find Recipes</Button>
-      </form>
-    </div>
+    // Main body of the home page
+    <Box sx={sxStyle}>
+
+      <Box marginTop='-40%'>
+        {/* Text field for user to enter in their ingredients */}
+        <TextField onChange={(e) => setIngredient(e.target.value)}label="ingredients" variant="standard" size="medium" value={ingredient}/>
+        {/* Button to add inputted ingredient into ingredientList state */}
+        <AddBoxRoundedIcon onClick={handleIngredient} fontSize="large"  cursor="pointer"/>
+        {/* Button which submits ingredientList to backend and request recipes */}
+        
+        {/* Conditional render of the ingredients list, displays and allows removal of inputted ingredients */}
+        {ingredientsList.length > 0 &&
+        <Box backgroundColor='gray' marginTop={'1rem'} paddingBottom={'1rem'} paddingTop={'1rem'} textAlign={'center'} >
+          <Typography marginBottom={'1rem'}>My Ingredients:</Typography>
+          {ingredientsList.map( ingredient => (
+              // ListItem component renders each ingredient followed by an icon used to delete the ingredient from the list
+              <ListItem dense="true" key={ingredient}>{ingredient}
+                <DeleteIcon color="primary" onClick={() => deleteIngredient(ingredient)} sx={ {cursor : "pointer"} }/>
+              </ListItem>))}
+              <Button sx={ {marginTop: '2rem'}} onClick={handleRecipeSearch} variant="contained" >Find Recipes</Button>
+        </Box>
+        }
+
+        
+      </Box>
+      
+    </Box>
   )
 }

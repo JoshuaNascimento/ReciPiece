@@ -1,10 +1,13 @@
 import React, {Component} from 'react';
+import ScopedCssBaseline from '@mui/material/ScopedCssBaseline';
 import './App.css';
 import {Route, BrowserRouter as Router, Routes} from 'react-router-dom';
 import Home from "./Pages/Home";
 import Recipes from './Pages/Recipes';
-
 import TextField from '@mui/material/Button';
+
+
+
 
 class App extends Component {
 
