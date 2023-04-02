@@ -3,9 +3,10 @@ import React, {useState} from 'react'
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useNavigate} from "react-router-dom";
-import { ListItem, Typography} from "@mui/material";
+import { List, Typography, Grid} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddBoxRoundedIcon from '@mui/icons-material/AddBoxRounded';
+import RemoveRoundedIcon from '@mui/icons-material/RemoveRounded';
 import { Box } from '@mui/system';
 
 const sxStyle = {
@@ -87,7 +88,7 @@ export default function Home() {
     // Main body of the home page
     <Box sx={sxStyle}>
 
-      <Box marginTop='-40%'>
+      <Box marginTop='-25%'>
         {/* Text field for user to enter in their ingredients */}
         <TextField onChange={(e) => setIngredient(e.target.value)}label="ingredients" variant="standard" size="medium" value={ingredient}/>
         {/* Button to add inputted ingredient into ingredientList state */}
@@ -96,13 +97,19 @@ export default function Home() {
         
         {/* Conditional render of the ingredients list, displays and allows removal of inputted ingredients */}
         {ingredientsList.length > 0 &&
-        <Box backgroundColor='gray' marginTop={'1rem'} paddingBottom={'1rem'} paddingTop={'1rem'} textAlign={'center'} >
+        <Box backgroundColor='gray' marginTop={'1rem'} paddingBottom={'1rem'} paddingTop={'1rem'} textAlign={'center'}>
           <Typography marginBottom={'1rem'}>My Ingredients:</Typography>
-          {ingredientsList.map( ingredient => (
-              // ListItem component renders each ingredient followed by an icon used to delete the ingredient from the list
-              <ListItem dense="true" key={ingredient}>{ingredient}
-                <DeleteIcon color="primary" onClick={() => deleteIngredient(ingredient)} sx={ {cursor : "pointer"} }/>
-              </ListItem>))}
+          {ingredientsList.map( ingredient => ( 
+              <Box key={ingredient}>
+                {/* ListItem component renders each ingredient followed by an icon used to delete the ingredient from the list */}
+                <Grid container sx={ {display:"flex", paddingLeft:"1.5rem"} } key={ingredient}>
+                  <Grid item xs={2}><RemoveRoundedIcon/></Grid>
+                  <Grid item xs={1}>{ingredient}</Grid>
+                  <Grid item xs={9}><DeleteIcon color="primary" onClick={() => deleteIngredient(ingredient)} sx={ {cursor : "pointer"} }/></Grid>
+                </Grid>
+                
+                
+              </Box>))}
               <Button sx={ {marginTop: '2rem'}} onClick={handleRecipeSearch} variant="contained" >Find Recipes</Button>
         </Box>
         }
