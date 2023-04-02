@@ -2,12 +2,8 @@ import React, {Component} from 'react';
 import ScopedCssBaseline from '@mui/material/ScopedCssBaseline';
 import './App.css';
 import {Route, BrowserRouter as Router, Routes} from 'react-router-dom';
-import Home from "./Pages/Home";
+import Home from "./Components/IngredientSearch";
 import Recipes from './Pages/Recipes';
-import TextField from '@mui/material/Button';
-
-
-
 
 class App extends Component {
 
@@ -28,7 +24,7 @@ class App extends Component {
             <Router>
                 <Routes>
                     <Route path="/" exact element={<Home/>}/>
-                    <Route path ="/recipes" exact element={<Recipes/>}/>
+                    <Route path ="/recipes" element={<Recipes/>}/>
                 </Routes>
             </Router>
             
