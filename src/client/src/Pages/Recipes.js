@@ -6,12 +6,14 @@ import RecipeCard from '../Components/RecipeCard.js';
 
 const sxStyle = {
   display: 'flex',
+  textAlign: 'center',
   alignItems: 'center',
   justifyContent: 'center',
-  height: '100vh',
   background: '#FEDBD0',
+  height: "100vh"
+};
 
-}
+
 
 export default function Recipes() {
 
@@ -23,7 +25,7 @@ export default function Recipes() {
     <Grid container sx={sxStyle}>
       {/* Use IngredientSearch with the ingredients used to generate the current recipes data */}
       <Grid item xs={2}>
-        <IngredientSearch sx={ {padding:"5"} } ingredients={location.state.ingredients} />
+        <IngredientSearch ingredients={location.state.ingredients} />
       </Grid>
 
       <Grid item xs={1}>
@@ -32,7 +34,7 @@ export default function Recipes() {
       
       {/* Recipe card Box */}
       <Grid item xs={8}>
-        <RecipeCard  data={location.state.recipes}/>
+        <RecipeCard data={location.state.recipes}/>
       </Grid>
       
     </Grid>
