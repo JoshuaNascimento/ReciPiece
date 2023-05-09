@@ -63,3 +63,4 @@ src/client/yarn-error.log*
 /src/client/public/robots.txt
 /src/client/public/logo512.png
 /src/client/public/logo192.png
+/src/node_modules/
