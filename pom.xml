@@ -14,7 +14,7 @@
 	<name>ReciPiece</name>
 	<description>Recipe finder based on the ingredients the user currently has in their household</description>
 	<properties>
-		<java.version>17</java.version>
+		<java.version>18</java.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
   	<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
