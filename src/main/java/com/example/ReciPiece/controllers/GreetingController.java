@@ -51,7 +51,7 @@ public class GreetingController {
     @GetMapping(value = "/callclienthello")
     private String getHelloClient() {
         // Define clientside url to access the service
-        String uri = String.format("http://localhost:%s/hello", PORT);
+        String uri = String.format("http://localhost/hello");
         // RestTemplate is the class used to consume RESTful web services within Spring
         RestTemplate restTemplate = new RestTemplate();
         // getForObject is used on the defined service
