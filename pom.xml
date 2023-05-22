@@ -14,9 +14,7 @@
 	<name>ReciPiece</name>
 	<description>Recipe finder based on the ingredients the user currently has in their household</description>
 	<properties>
-		<java.version>18</java.version>
-		<maven.compiler.source>18</maven.compiler.source>
-  	<maven.compiler.target>18</maven.compiler.target>
+		<java.version>1.8</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -41,12 +39,18 @@
 			<version>0.0.20131108.vaadin1</version>
 			<scope>compile</scope>
 		</dependency>
-
-
 	</dependencies>
 
 	<build>
 		<plugins>
+		<plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <configuration>
+                <source>1.8</source>
+                <target>1.8</target>
+            </configuration>
+        </plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
