@@ -32,6 +32,9 @@ public class GreetingController {
     @Value("${apiKey}")
     private String apiKey;
 
+    @Value("${server.port}")
+    private String PORT;
+
     // Request Mapping annotation makes this function a route, specifying a path within the annotation
     // Default method for RequestMapping is a GET request
     @RequestMapping("/hello")
@@ -39,27 +42,22 @@ public class GreetingController {
         return "Hello from getGreeting!";
     }
 
+    @GetMapping("/")
+    public String index() {
+        return "Hello there! I'm running.";
+    }
+
     // External call will be available on the route established in value
     @GetMapping(value = "/callclienthello")
     private String getHelloClient() {
         // Define clientside url to access the service
-        String uri = "http://localhost:8080/hello";
+        String uri = String.format("http://localhost:%s/hello", PORT);
         // RestTemplate is the class used to consume RESTful web services within Spring
         RestTemplate restTemplate = new RestTemplate();
         // getForObject is used on the defined service
         String result = restTemplate.getForObject(uri, String.class);
         return result;
     }
-
-    // Another practise external call
-    @GetMapping(value = "/joke")
-    public String getJoke() {
-        String url = "https://v2.jokeapi.dev/joke/Any?safe-mode";
-        RestTemplate restTemplate = new RestTemplate();
-        String result = restTemplate.getForObject(url, String.class);
-        return result;
-    }
-
 
     // Call Spoonacular Api to generate recipes based on ingredients provided
     @GetMapping(value = "/recipe")
