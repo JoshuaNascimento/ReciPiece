@@ -29,11 +29,8 @@ import java.util.Map;
 public class GreetingController {
 
     // Api key is held within application.properties and called using @Value to obscure it from public view
-    @Value("${apiKey}")
-    private String apiKey;
-
-    @Value("${server.port}")
-    private String PORT;
+    //@Value("${apiKey}")
+    //private String apiKey;
 
     // Request Mapping annotation makes this function a route, specifying a path within the annotation
     // Default method for RequestMapping is a GET request
@@ -73,7 +70,7 @@ public class GreetingController {
         // Create headers object which will be used to pass the apiKey instead of through the url, potentially keeps the key safer i'm unsure
         HttpHeaders headers = new HttpHeaders();
         // Set apiKey header using the key hidden in application.properties
-        headers.set("x-api-key", apiKey);
+        //headers.set("x-api-key", apiKey);
 
         // Create Entity which consists of headers and a body
         // Set the headers of the entity
@@ -103,7 +100,7 @@ public class GreetingController {
         RestTemplate restTemplate = new RestTemplate();
 
         HttpHeaders headers = new HttpHeaders();
-        headers.set("x-api-key", apiKey);
+        //headers.set("x-api-key", apiKey);
 
         HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
 
