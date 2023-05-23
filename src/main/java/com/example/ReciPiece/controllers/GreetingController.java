@@ -28,6 +28,9 @@ import java.util.Map;
 @CrossOrigin(origins = "localhost")  // CrossOrigin is the security protocol that prevents an address from calling itself so we must allow an exception
 public class GreetingController {
 
+    // TODO: Api key based things were commented out to allow the Heroku app to work. To fix find a way to dynamically choose between loading local apiKey or
+    // heroku api key
+
     // Api key is held within application.properties and called using @Value to obscure it from public view
     //@Value("${apiKey}")
     //private String apiKey;
