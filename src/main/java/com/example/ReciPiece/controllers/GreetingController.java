@@ -39,11 +39,6 @@ public class GreetingController {
         return "Hello from getGreeting!";
     }
 
-    @GetMapping("/")
-    public String index() {
-        return "Hello there! I'm running.";
-    }
-
     // External call will be available on the route established in value
     @GetMapping(value = "/callclienthello")
     private String getHelloClient() {
