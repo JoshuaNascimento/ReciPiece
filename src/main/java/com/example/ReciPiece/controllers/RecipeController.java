@@ -26,14 +26,14 @@ import java.util.Map;
 // Combines @Controller and @ResponseBody annotations, allowing return of string data as apposed to an entire view
 @RestController
 @CrossOrigin(origins = "localhost")  // CrossOrigin is the security protocol that prevents an address from calling itself so we must allow an exception
-public class GreetingController {
+public class RecipeController {
 
     // TODO: Api key based things were commented out to allow the Heroku app to work. To fix find a way to dynamically choose between loading local apiKey or
     // heroku api key
 
     // Api key is held within application.properties and called using @Value to obscure it from public view
-    //@Value("${apiKey}")
-    //private String apiKey;
+    @Value("${apiKey}")
+    private String apiKey;
 
     // Request Mapping annotation makes this function a route, specifying a path within the annotation
     // Default method for RequestMapping is a GET request
@@ -98,7 +98,7 @@ public class GreetingController {
         RestTemplate restTemplate = new RestTemplate();
 
         HttpHeaders headers = new HttpHeaders();
-        //headers.set("x-api-key", apiKey);
+        headers.set("x-api-key", apiKey);
 
         HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
 
