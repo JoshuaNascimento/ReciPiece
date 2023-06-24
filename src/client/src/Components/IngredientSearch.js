@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react'
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useNavigate} from "react-router-dom";
-import { List, Typography, Grid} from "@mui/material";
+import { Typography, Grid} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddBoxRoundedIcon from '@mui/icons-material/AddBoxRounded';
 import RemoveRoundedIcon from '@mui/icons-material/RemoveRounded';
@@ -56,6 +56,7 @@ export default function IngredientSearch({ingredients}) {
   const handleRecipeSearch = async (event) => {
     // TODO: Use prevent default to error check the response than only send to new page if response is 200
     //event.preventDefault();
+    console.log("clicked!");
 
     // Create string of comma seperated elements from ingredientsList state array
     let ingredientsString = ingredientsList.join()

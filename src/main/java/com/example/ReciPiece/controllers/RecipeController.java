@@ -68,7 +68,7 @@ public class RecipeController {
         // Create headers object which will be used to pass the apiKey instead of through the url, potentially keeps the key safer i'm unsure
         HttpHeaders headers = new HttpHeaders();
         // Set apiKey header using the key hidden in application.properties
-        //headers.set("x-api-key", apiKey);
+        headers.set("x-api-key", apiKey);
 
         // Create Entity which consists of headers and a body
         // Set the headers of the entity

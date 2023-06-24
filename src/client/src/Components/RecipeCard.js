@@ -7,6 +7,9 @@ export default function RecipeCard({ data }) {
 
   const [recipeList, setRecipeList] = useState([])
 
+  // State used to check if new paremeters were sent to IngredientSearch component which then would send new data into RecipeCard
+  const [incomingData, setIncomingData] = useState([])
+
   const navigate = useNavigate();
 
   const handleViewRecipe = async (recipe) => {
@@ -28,10 +31,14 @@ export default function RecipeCard({ data }) {
 
   /**
    * After component render useEffect will trigger and set the recipeList state to 3 random recipes within the recipe dataset passed in
+   * Also checks if incoming data is changed as a result of the "Find Recipes" button which would generate new incoming data from the IngredientSearch component
    */
   useEffect(() => {
+    if (data !== incomingData) {
+      setIncomingData(incomingData);
+    }
     setRecipeList(getRandomRecipes());
-  },[])
+  },[data])
 
   /**
    * getRandomRecipes generates a random number from 0 to the passed in dataset's length and assigns the recipe at that dataset index to the 
